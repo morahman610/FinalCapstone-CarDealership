@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@if (ViewBag.Error != null)
+{
+    <div>
+        <h2>Error: Status @ViewBag.Error</h2>
+        @ViewBag.ErrorDescription
+        <br />
+        @ViewBag.Data
+    </div>
+}
+else
+{
+
+    <form action="/Home/Contact" method="post">
+        <label>Search by Make</label>
+        <table>
+            <tr>
+                <td>
+                    <input type="text" name="make" class="form-control" placeholder="Make" />
+                    <input type="submit" name="Contact" class="btn btn-primary" />
+                </td>
+            </tr>
+        </table>
+    </form>
+    <h2>CarList</h2>
+    <div>
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th width="20%">Year</th>
+                <th width="20%">Make</th>
+                <th width="20%">Model</th>
+                <th width="20%">Color</th>
+                <th width="20%">Price</th>
+            </tr>
+            @for (int i = 0; i < ViewBag.Cars.Count; i++)
+            {
+                <tr>
+                    <td>@ViewBag.Cars[i]["Make"]</td>
+                    <td>@ViewBag.Cars[i]["Model"]</td>
+                    <td>
+                       @ViewBag.Cars[i]["Color"]
+                    </td>
+                    <td>
+                        @ViewBag.Cars[i]["Year"]
+                    </td>
+
+                    <td>
+                       $@ViewBag.Cars[i]["Price"] 
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+}
+
+<script>
+    function searchByMake() {
+        @ViewBag
+    }
+</script>
+
