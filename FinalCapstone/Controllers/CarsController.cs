@@ -17,9 +17,19 @@ namespace FinalCapstone.Controllers
         private CarEntities db = new CarEntities();
 
         // GET: api/Cars
-        public IQueryable<Car> GetCars()
+        public List<Car> GetCars()
         {
-            return db.Cars;
+            List<Car> car = db.Cars.ToList();
+            if (car == null)
+            {
+                return null;
+            }
+            else
+            {
+                car = (from b in db.Cars
+                       select b).ToList();
+                return car;
+            }
         }
 
         // GET: api/Cars/5
@@ -35,7 +45,7 @@ namespace FinalCapstone.Controllers
             return Ok(car);
         }
 
-        [HttpGet]
+        [ResponseType(typeof(Car))]
         public List<Car> GetCarByMake(string id)
         {
             List<Car> car = db.Cars.ToList();
@@ -52,7 +62,7 @@ namespace FinalCapstone.Controllers
             }
         }
 
-        [HttpGet]
+        [ResponseType(typeof(Car))]
         public List<Car> GetCarByModel(string id)
         {
             List<Car> car = db.Cars.ToList();
@@ -103,6 +113,26 @@ namespace FinalCapstone.Controllers
             }
         }
 
+
+        [HttpGet]
+        public List<Car> GetCarByAny(string id)
+        {
+            List<Car> car = db.Cars.ToList();
+            if (car == null)
+            {
+                return null;
+            }
+            else
+            {
+                car = (from b in db.Cars
+                       where b.Year == Convert.ToInt32(id)
+                       || b.Color == id
+                       || b.Make == id
+                       || b.Model == id
+                       select b).ToList();
+                return car;
+            }
+        }
         // PUT: api/Cars/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutCar(int id, Car car)

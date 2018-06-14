@@ -10,7 +10,7 @@
             <th width="20%">Color</th>
             <th width="20%">Price</th>
         </tr>
-        @for (int i = 0; i < TempData["Cars"].Count; i++)
+        @for (int i = 0; i < ViewBag.Cars.Count; i++)
             {
             <tr>
                 <td>@ViewBag.Cars[i]["Make"]</td>

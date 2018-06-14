@@ -4,7 +4,25 @@
 }
 
 <h2>Search</h2>
-<form action="/Home/Contact" method="get">
+<form action="/Home/SearchResultsByMake" method="get">
     <input type="text" name="make">
+    <input type="submit" value="Search" class="btn btn-block">
+</form>
+
+Model
+<form action="/Home/SearchResultsByModel" method="get">
+    <input type="text" name="model">
+    <input type="submit" value="Search" class="btn btn-block">
+</form>
+
+Year
+<form action="/Home/SearchResultsByYear" method="get">
+    <input type="number" name="year">
+    <input type="submit" value="Search" class="btn btn-block">
+</form>
+
+Color
+<form action="/Home/SearchResultsByColor" method="get">
+    <input type="text" name="color">
     <input type="submit" value="Search" class="btn btn-block">
 </form>

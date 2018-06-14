@@ -1,4 +1,6 @@
 ﻿@{
+    /**/
+
     ViewBag.Title = "Home Page";
 }
 
@@ -14,17 +16,30 @@
 else
 {
 
-    <form action="/Home/Contact" method="post">
+    <form action="/Home/SearchResultsByMake" method="get">
         <label>Search by Make</label>
-        <table>
-            <tr>
-                <td>
-                    <input type="text" name="make" class="form-control" placeholder="Make" />
-                    <input type="submit" name="Contact" class="btn btn-primary" />
-                </td>
-            </tr>
-        </table>
+        <input type="text" name="make" class="form-control" placeholder="Make" />
+        <input type="submit" class="btn btn-primary" />
     </form>
+
+    <form action="/Home/SearchResultsByModel" method="get">
+        <label>Search by Model</label>
+        <input type="text" name="model" class="form-control" placeholder="Model" />
+        <input type="submit" class="btn btn-primary" />
+    </form>
+
+    <form action="/Home/SearchResultsByColor" method="get">
+        <label>Search by Color</label>
+        <input type="text" name="color" class="form-control" placeholder="Color" />
+        <input type="submit" class="btn btn-primary" />
+    </form>
+
+    <form action="/Home/SearchResultsByYear" method="get">
+        <label>Search by Year</label>
+        <input type="number" name="year" class="form-control" placeholder="Year" />
+        <input type="submit" class="btn btn-primary" />
+    </form>
+
     <h2>CarList</h2>
     <div>
         <table class="table table-bordered table-striped">
@@ -36,24 +51,24 @@ else
                 <th width="20%">Price</th>
             </tr>
             @for (int i = 0; i < ViewBag.Cars.Count; i++)
-    {
-        if (ViewBag.Cars[i] == ViewBag.ID)
-        {
-            <tr>
-                <td>@ViewBag.Cars[i]["Make"]</td>
-                <td>@ViewBag.Cars[i]["Model"]</td>
-                <td>
-                    @ViewBag.Cars[i]["Color"]
-                </td>
-                <td>
-                    @ViewBag.Cars[i]["Year"]
-                </td>
+            {
+                if (ViewBag.Cars[i] == ViewBag.ID)
+                {
+                    <tr>
+                        <td>@ViewBag.Cars[i]["Make"]</td>
+                        <td>@ViewBag.Cars[i]["Model"]</td>
+                        <td>
+                            @ViewBag.Cars[i]["Color"]
+                        </td>
+                        <td>
+                            @ViewBag.Cars[i]["Year"]
+                        </td>
 
-                <td>
-                    $@ViewBag.Cars[i]["Price"]
-                </td>
-            </tr>
-        }
+                        <td>
+                            $@ViewBag.Cars[i]["Price"]
+                        </td>
+                    </tr>
+                }
 
             }
         </table>

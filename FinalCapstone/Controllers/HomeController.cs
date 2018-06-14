@@ -73,11 +73,17 @@ namespace FinalCapstone.Controllers
             return View();
         }
 
-        public ActionResult Contact(string make)
+        public ActionResult Search()
+        {
+            return View();
+        }
+
+        public ActionResult SearchResultsByMake(string make)
         {
             ViewBag.Test = make;
 
-            HttpWebRequest WR = WebRequest.CreateHttp($"http://localhost:54016/api/Cars/GetCarByMake/{make}");
+
+            HttpWebRequest WR = WebRequest.CreateHttp($"http://localhost:54016/api/Cars/GetCarByMake?id={make}");
             WR.UserAgent = ".NET Framework Test Client";
 
             HttpWebResponse Response;
@@ -108,8 +114,8 @@ namespace FinalCapstone.Controllers
             try
             {
 
-                TempData["Cars"] = JArray.Parse(CarData);
-
+                JArray jsonData = JArray.Parse(CarData);
+                ViewBag.Cars = jsonData;
 
             }
             catch (Exception e)
@@ -120,15 +126,165 @@ namespace FinalCapstone.Controllers
             }
 
 
-            return View();
+            return View("SearchResults");
         }
 
-        public ActionResult Search()
+
+
+        public ActionResult SearchResultsByModel(string model)
+        {
+
+
+            HttpWebRequest WR = WebRequest.CreateHttp($"http://localhost:54016/api/Cars/GetCarByModel?id={model}");
+            WR.UserAgent = ".NET Framework Test Client";
+
+            HttpWebResponse Response;
+
+            try
+            {
+                Response = (HttpWebResponse)WR.GetResponse();
+            }
+            catch (WebException e)
+            {
+                ViewBag.Error = "Exception";
+                ViewBag.ErrorDescription = e.Message;
+                return View();
+            }
+
+            if (Response.StatusCode != HttpStatusCode.OK)
+            {
+                ViewBag.Error = Response.StatusCode;
+                ViewBag.ErrorDescription = Response.StatusDescription;
+                return View();
+            }
+
+            StreamReader reader = new StreamReader(Response.GetResponseStream());
+            string CarData = reader.ReadToEnd();
+
+
+
+            try
+            {
+
+                JArray jsonData = JArray.Parse(CarData);
+                ViewBag.Cars = jsonData;
+
+            }
+            catch (Exception e)
+            {
+                ViewBag.Error = "JSON Issue";
+                ViewBag.ErrorDescription = e.Message;
+                return View();
+            }
+
+
+            return View("SearchResults");
+        }
+
+        public ActionResult SearchResultsByYear(string year)
+        {
+
+
+            HttpWebRequest WR = WebRequest.CreateHttp($"http://localhost:54016/api/Cars/GetCarByYear?id={year}");
+            WR.UserAgent = ".NET Framework Test Client";
+
+            HttpWebResponse Response;
+
+            try
+            {
+                Response = (HttpWebResponse)WR.GetResponse();
+            }
+            catch (WebException e)
+            {
+                ViewBag.Error = "Exception";
+                ViewBag.ErrorDescription = e.Message;
+                return View();
+            }
+
+            if (Response.StatusCode != HttpStatusCode.OK)
+            {
+                ViewBag.Error = Response.StatusCode;
+                ViewBag.ErrorDescription = Response.StatusDescription;
+                return View();
+            }
+
+            StreamReader reader = new StreamReader(Response.GetResponseStream());
+            string CarData = reader.ReadToEnd();
+
+
+
+            try
+            {
+
+                JArray jsonData = JArray.Parse(CarData);
+                ViewBag.Cars = jsonData;
+
+            }
+            catch (Exception e)
+            {
+                ViewBag.Error = "JSON Issue";
+                ViewBag.ErrorDescription = e.Message;
+                return View();
+            }
+
+
+            return View("SearchResults");
+        }
+
+        public ActionResult SearchResultsByColor(string color)
+        {
+
+
+            HttpWebRequest WR = WebRequest.CreateHttp($"http://localhost:54016/api/Cars/GetCarByColor?id={color}");
+            WR.UserAgent = ".NET Framework Test Client";
+
+            HttpWebResponse Response;
+
+            try
+            {
+                Response = (HttpWebResponse)WR.GetResponse();
+            }
+            catch (WebException e)
+            {
+                ViewBag.Error = "Exception";
+                ViewBag.ErrorDescription = e.Message;
+                return View();
+            }
+
+            if (Response.StatusCode != HttpStatusCode.OK)
+            {
+                ViewBag.Error = Response.StatusCode;
+                ViewBag.ErrorDescription = Response.StatusDescription;
+                return View();
+            }
+
+            StreamReader reader = new StreamReader(Response.GetResponseStream());
+            string CarData = reader.ReadToEnd();
+
+
+
+            try
+            {
+
+                JArray jsonData = JArray.Parse(CarData);
+                ViewBag.Cars = jsonData;
+
+            }
+            catch (Exception e)
+            {
+                ViewBag.Error = "JSON Issue";
+                ViewBag.ErrorDescription = e.Message;
+                return View();
+            }
+
+
+            return View("SearchResults");
+        }
+
+        public ActionResult SearchResults()
         {
             return View();
         }
-       
 
-        
     }
 }
