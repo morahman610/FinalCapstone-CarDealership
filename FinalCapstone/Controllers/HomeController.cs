@@ -76,7 +76,7 @@ namespace FinalCapstone.Controllers
         public ActionResult Contact(string make)
         {
 
-            HttpWebRequest WR = WebRequest.CreateHttp($"http://localhost:54016/api/Cars/GetCarByMake?make={make}");
+            HttpWebRequest WR = WebRequest.CreateHttp($"http://localhost:54016/api/Cars/GetCarByMake?id={make}");
             WR.UserAgent = ".NET Framework Test Client";
 
             HttpWebResponse Response;

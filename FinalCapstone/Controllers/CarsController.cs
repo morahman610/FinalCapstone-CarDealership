@@ -35,7 +35,7 @@ namespace FinalCapstone.Controllers
             return Ok(car);
         }
 
-        [HttpGet]
+        [ResponseType(typeof(Car))]
         public List<Car> GetCarByMake(string id)
         {
             List<Car> car = db.Cars.ToList();
