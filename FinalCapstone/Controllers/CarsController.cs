@@ -113,25 +113,35 @@ namespace FinalCapstone.Controllers
             }
         }
 
-        public List<Car> GetCarByAny (string make, string model, string color)
+       /* public List<Car> GetCarByAny (string make, string model, string color)
         {
             List<Car> cars = db.Cars.ToList();
             List<Car> search = null;
             if (make != null && make != "")
             {
-               search = cars.Where(b => b.Make.Contains(make)).ToList();
+              List<Car> containsMake = cars.Where(b => b.Make.Contains(make)).ToList();
+
+                foreach (Car c in containsMake)
+                {
+                    search.Add(c);
+                }
             }
 
             if (!string.IsNullOrEmpty(model))
             {
-                search = cars.Where(b => b.Model.Contains(model)).ToList();
 
+                List<Car> containsModel = cars.Where(b => b.Make.Contains(make)).ToList();
+
+                foreach (Car c in containsModel)
+                {
+                    search.Add(c);
+                }
             }
 
-            return search.ToList();
-        }
+            return search;
+        } */
 
-        /* [HttpGet]
+        [HttpGet]
         public List<Car> GetCarByAny(string id)
         {
             List<Car> car = db.Cars.ToList();
@@ -149,7 +159,7 @@ namespace FinalCapstone.Controllers
                        select b).ToList();
                 return car;
             }
-        } */
+        }  
 
         // PUT: api/Cars/5
         [ResponseType(typeof(void))]
