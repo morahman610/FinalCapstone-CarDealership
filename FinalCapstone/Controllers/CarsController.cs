@@ -113,55 +113,53 @@ namespace FinalCapstone.Controllers
             }
         }
 
+        /* public List<Car> GetCarByAny (string make, string model, string color)
+         {
+             List<Car> cars = db.Cars.ToList();
+             List<Car> search = null;
+             if (make != null && make != "")
+             {
+               List<Car> containsMake = cars.Where(b => b.Make.Contains(make)).ToList();
 
-        [ResponseType(typeof(Car))]
-        public IHttpActionResult GetCarByAll(string make, string model, int? year, string color)
+                 foreach (Car c in containsMake)
+                 {
+                     search.Add(c);
+                 }
+             }
+
+             if (!string.IsNullOrEmpty(model))
+             {
+
+                 List<Car> containsModel = cars.Where(b => b.Make.Contains(make)).ToList();
+
+                 foreach (Car c in containsModel)
+                 {
+                     search.Add(c);
+                 }
+             }
+
+             return search;
+         } */
+        [HttpGet]
+        public List<Car> GetCarByAny(string id)
         {
-            //if (string.IsNullOrEmpty(color))
-            //{
-            //    throw new ArgumentException("message", nameof(color));
-            //}
-
-            //if (string.IsNullOrEmpty(model))
-            //{
-            //    throw new ArgumentException("message", nameof(model));
-            //}
-
-            //if (string.IsNullOrEmpty(make))
-            //{
-            //    throw new ArgumentException("message", nameof(make));
-            //}
-
-            List<Car> cars = (from c in db.Cars
-                              select c).ToList();
-            if (make != "" && make != null)
+            List<Car> car = db.Cars.ToList();
+            if (car == null)
             {
-                cars = (from c in cars
-                        where c.Make.Contains(make)
-                        select c
-                        ).ToList();
+                return null;
             }
-            if (model != "" && model != null)
+            else
             {
-                cars = (from c in cars
-                        where c.Model.Contains(model)
-                        select c).ToList();
+                car = (from b in db.Cars
+                       where
+                       b.Color == id
+                       || b.Make == id
+                       || b.Model == id
+                       select b).ToList();
+                return car;
             }
-            if (year != 0)
-            {
-                cars = (from c in cars
-                        where c.Year == year
-                        select c).ToList();
-            }
-            if (color != "" && color != null)
-            {
-                cars = (from c in cars
-                        where c.Color.Contains(color)
-                        select c).ToList();
-            }
-
-            return Ok(cars);
         }
+
 
         // PUT: api/Cars/5
         [ResponseType(typeof(void))]

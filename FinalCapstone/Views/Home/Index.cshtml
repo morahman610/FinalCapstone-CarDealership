@@ -17,34 +17,36 @@ else
 {
 
     <form action="/Home/SearchResultsByMake" method="get">
-        <label>Search by Make</label>
+        
         <input type="text" name="make" class="form-control" placeholder="Make" />
         <input type="submit" class="btn btn-primary" />
     </form>
 
     <form action="/Home/SearchResultsByModel" method="get">
-        <label>Search by Model</label>
+        
         <input type="text" name="model" class="form-control" placeholder="Model" />
         <input type="submit" class="btn btn-primary" />
     </form>
 
     <form action="/Home/SearchResultsByColor" method="get">
-        <label>Search by Color</label>
+       
         <input type="text" name="color" class="form-control" placeholder="Color" />
         <input type="submit" class="btn btn-primary" />
     </form>
 
     <form action="/Home/SearchResultsByYear" method="get">
-        <label>Search by Year</label>
+       
         <input type="number" name="year" class="form-control" placeholder="Year" />
         <input type="submit" class="btn btn-primary" />
     </form>
 
-    <form action="/Home/SearchCarAll" method="get">
-        <label>Search All</label>
-        <input type="text" name="all" class="form-control" placeholder="Search" />
+    <form action="/Home/SearchResultsByAny" method="get">
+        
+        <input type="text" name="any" class="form-control" placeholder="Combined" />
         <input type="submit" class="btn btn-primary" />
     </form>
+
+
 
     <h2>CarList</h2>
     <div>
@@ -58,7 +60,6 @@ else
             </tr>
             @for (int i = 0; i < ViewBag.Cars.Count; i++)
             {
-               
                     <tr>
                         <td>@ViewBag.Cars[i]["Year"]</td>
                         <td>@ViewBag.Cars[i]["Make"]</td>
@@ -73,7 +74,6 @@ else
                             $@ViewBag.Cars[i]["Price"]
                         </td>
                     </tr>
-              
 
             }
         </table>
