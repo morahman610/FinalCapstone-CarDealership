@@ -281,6 +281,55 @@ namespace FinalCapstone.Controllers
             return View("SearchResults");
         }
 
+        public ActionResult SearchResultsByAny(string any)
+        {
+
+
+            HttpWebRequest WR = WebRequest.CreateHttp($"http://localhost:54016/api/Cars/GetCarByAny?id={any}");
+            WR.UserAgent = ".NET Framework Test Client";
+
+            HttpWebResponse Response;
+
+            try
+            {
+                Response = (HttpWebResponse)WR.GetResponse();
+            }
+            catch (WebException e)
+            {
+                ViewBag.Error = "Exception";
+                ViewBag.ErrorDescription = e.Message;
+                return View();
+            }
+
+            if (Response.StatusCode != HttpStatusCode.OK)
+            {
+                ViewBag.Error = Response.StatusCode;
+                ViewBag.ErrorDescription = Response.StatusDescription;
+                return View();
+            }
+
+            StreamReader reader = new StreamReader(Response.GetResponseStream());
+            string CarData = reader.ReadToEnd();
+
+
+
+            try
+            {
+
+                JArray jsonData = JArray.Parse(CarData);
+                ViewBag.Cars = jsonData;
+
+            }
+            catch (Exception e)
+            {
+                ViewBag.Error = "JSON Issue";
+                ViewBag.ErrorDescription = e.Message;
+                return View();
+            }
+
+
+            return View("SearchResults");
+        }
         public ActionResult SearchResults()
         {
             return View();

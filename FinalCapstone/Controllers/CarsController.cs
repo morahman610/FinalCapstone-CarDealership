@@ -113,8 +113,25 @@ namespace FinalCapstone.Controllers
             }
         }
 
+        public List<Car> GetCarByAny (string make, string model, string color)
+        {
+            List<Car> cars = db.Cars.ToList();
+            List<Car> search = null;
+            if (make != null && make != "")
+            {
+               search = cars.Where(b => b.Make.Contains(make)).ToList();
+            }
 
-        [HttpGet]
+            if (!string.IsNullOrEmpty(model))
+            {
+                search = cars.Where(b => b.Model.Contains(model)).ToList();
+
+            }
+
+            return search.ToList();
+        }
+
+        /* [HttpGet]
         public List<Car> GetCarByAny(string id)
         {
             List<Car> car = db.Cars.ToList();
@@ -125,14 +142,15 @@ namespace FinalCapstone.Controllers
             else
             {
                 car = (from b in db.Cars
-                       where b.Year == Convert.ToInt32(id)
-                       || b.Color == id
+                       where 
+                       b.Color == id
                        || b.Make == id
                        || b.Model == id
                        select b).ToList();
                 return car;
             }
-        }
+        } */
+
         // PUT: api/Cars/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutCar(int id, Car car)
