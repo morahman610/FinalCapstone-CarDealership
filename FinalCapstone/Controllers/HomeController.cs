@@ -75,8 +75,9 @@ namespace FinalCapstone.Controllers
 
         public ActionResult Contact(string make)
         {
+            ViewBag.Test = make;
 
-            HttpWebRequest WR = WebRequest.CreateHttp($"http://localhost:54016/api/Cars/GetCarByMake?make={make}");
+            HttpWebRequest WR = WebRequest.CreateHttp($"http://localhost:54016/api/Cars/GetCarByMake/{make}");
             WR.UserAgent = ".NET Framework Test Client";
 
             HttpWebResponse Response;
@@ -102,11 +103,13 @@ namespace FinalCapstone.Controllers
             StreamReader reader = new StreamReader(Response.GetResponseStream());
             string CarData = reader.ReadToEnd();
 
+
+
             try
             {
-                JArray JsonData = JArray.Parse(CarData);
 
-                ViewBag.Cars = JsonData;
+                TempData["Cars"] = JArray.Parse(CarData);
+
 
             }
             catch (Exception e)

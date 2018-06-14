@@ -36,21 +36,25 @@ else
                 <th width="20%">Price</th>
             </tr>
             @for (int i = 0; i < ViewBag.Cars.Count; i++)
-            {
-                <tr>
-                    <td>@ViewBag.Cars[i]["Make"]</td>
-                    <td>@ViewBag.Cars[i]["Model"]</td>
-                    <td>
-                       @ViewBag.Cars[i]["Color"]
-                    </td>
-                    <td>
-                        @ViewBag.Cars[i]["Year"]
-                    </td>
+    {
+        if (ViewBag.Cars[i] == ViewBag.ID)
+        {
+            <tr>
+                <td>@ViewBag.Cars[i]["Make"]</td>
+                <td>@ViewBag.Cars[i]["Model"]</td>
+                <td>
+                    @ViewBag.Cars[i]["Color"]
+                </td>
+                <td>
+                    @ViewBag.Cars[i]["Year"]
+                </td>
 
-                    <td>
-                       $@ViewBag.Cars[i]["Price"] 
-                    </td>
-                </tr>
+                <td>
+                    $@ViewBag.Cars[i]["Price"]
+                </td>
+            </tr>
+        }
+
             }
         </table>
     </div>
