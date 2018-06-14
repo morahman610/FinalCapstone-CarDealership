@@ -114,25 +114,55 @@ namespace FinalCapstone.Controllers
         }
 
 
-        [HttpGet]
-        public List<Car> GetCarByAny(string id)
+        [ResponseType(typeof(Car))]
+        public IHttpActionResult GetCarByAll(string make, string model, int? year, string color)
         {
-            List<Car> car = db.Cars.ToList();
-            if (car == null)
+            //if (string.IsNullOrEmpty(color))
+            //{
+            //    throw new ArgumentException("message", nameof(color));
+            //}
+
+            //if (string.IsNullOrEmpty(model))
+            //{
+            //    throw new ArgumentException("message", nameof(model));
+            //}
+
+            //if (string.IsNullOrEmpty(make))
+            //{
+            //    throw new ArgumentException("message", nameof(make));
+            //}
+
+            List<Car> cars = (from c in db.Cars
+                              select c).ToList();
+            if (make != "" && make != null)
             {
-                return null;
+                cars = (from c in cars
+                        where c.Make.Contains(make)
+                        select c
+                        ).ToList();
             }
-            else
+            if (model != "" && model != null)
             {
-                car = (from b in db.Cars
-                       where b.Year == Convert.ToInt32(id)
-                       || b.Color == id
-                       || b.Make == id
-                       || b.Model == id
-                       select b).ToList();
-                return car;
+                cars = (from c in cars
+                        where c.Model.Contains(model)
+                        select c).ToList();
             }
+            if (year != 0)
+            {
+                cars = (from c in cars
+                        where c.Year == year
+                        select c).ToList();
+            }
+            if (color != "" && color != null)
+            {
+                cars = (from c in cars
+                        where c.Color.Contains(color)
+                        select c).ToList();
+            }
+
+            return Ok(cars);
         }
+
         // PUT: api/Cars/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutCar(int id, Car car)

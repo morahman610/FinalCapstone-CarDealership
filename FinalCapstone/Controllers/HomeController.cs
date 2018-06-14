@@ -280,6 +280,51 @@ namespace FinalCapstone.Controllers
 
             return View("SearchResults");
         }
+        [HttpGet]
+        public ActionResult SearchCarAll(string make, string model, int? year, string color)
+        {
+            HttpWebRequest WR = WebRequest.CreateHttp($"http://localhost:52043/api/Cars/GetCarByAll?make={make}&model={model}&year={year}&color={color}");
+
+            HttpWebResponse Response;
+
+            try
+            {
+                Response = (HttpWebResponse)WR.GetResponse();
+            }
+            catch (WebException e)
+            {
+                ViewBag.Error = "Exception";
+                ViewBag.ErrorDescription = e.Message;
+                return View();
+            }
+
+            if (Response.StatusCode != HttpStatusCode.OK)
+            {
+                ViewBag.Error = Response.StatusCode;
+                ViewBag.ErrorDescription = Response.StatusDescription;
+                return View();
+            }
+
+            StreamReader reader = new StreamReader(Response.GetResponseStream());
+            string CarData = reader.ReadToEnd();
+
+            try
+            {
+                JArray JsonData = JArray.Parse(CarData);
+                ViewBag.Cars = JsonData;
+
+              
+            }
+            catch (Exception e)
+            {
+                ViewBag.Error = "JSON Issue";
+                ViewBag.ErrorDescription = e.Message;
+                return View();
+            }
+            return View("SearchResults");
+        }
+
+
 
         public ActionResult SearchResults()
         {
